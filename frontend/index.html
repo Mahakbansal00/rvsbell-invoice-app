@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Invoice & Payments Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Invoice & Payments Dashboard</h1>
+    </header>
+
+    <section class="filters">
+      <label>Customer
+        <select id="customerFilter"></select>
+      </label>
+      <label>Start
+        <input type="date" id="startDate" />
+      </label>
+      <label>End
+        <input type="date" id="endDate" />
+      </label>
+      <button id="applyFilters">Apply</button>
+      <button id="clearFilters">Clear</button>
+    </section>
+
+    <section class="kpis">
+      <div class="kpi"><div class="kpi-label">Total Invoiced</div><div id="kpiInvoiced" class="kpi-value">—</div></div>
+      <div class="kpi"><div class="kpi-label">Total Received</div><div id="kpiReceived" class="kpi-value">—</div></div>
+      <div class="kpi"><div class="kpi-label">Total Outstanding</div><div id="kpiOutstanding" class="kpi-value">—</div></div>
+      <div class="kpi"><div class="kpi-label">% Overdue</div><div id="kpiOverdue" class="kpi-value">—</div></div>
+    </section>
+
+    <section class="table-section">
+      <input type="text" id="searchInput" placeholder="Search invoices..." />
+      <table id="invoiceTable">
+        <thead>
+          <tr>
+            <th data-sort="invoice_id">Invoice #</th>
+            <th data-sort="customer_name">Customer</th>
+            <th data-sort="invoice_date">Invoice Date</th>
+            <th data-sort="due_date">Due Date</th>
+            <th data-sort="amount">Amount</th>
+            <th data-sort="total_paid">Paid</th>
+            <th data-sort="outstanding">Outstanding</th>
+            <th data-sort="aging_bucket">Aging</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section class="chart-section">
+      <h2>Top 5 Customers by Outstanding</h2>
+      <canvas id="topChart"></canvas>
+    </section>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Record Payment</h3>
+      <form id="paymentForm">
+        <input type="hidden" id="modalInvoiceId" />
+        <label>Amount <input type="number" step="0.01" id="paymentAmount" required /></label>
+        <label>Date <input type="date" id="paymentDate" required /></label>
+        <div class="modal-actions">
+          <button type="submit">Save</button>
+          <button type="button" id="cancelModal">Cancel</button>
+        </div>
+      </form>
+      <div id="modalError" class="error"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
